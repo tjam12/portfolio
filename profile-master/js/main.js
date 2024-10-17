@@ -134,6 +134,28 @@
 		$(".fh5co-loader").fadeOut("slow");
 	};
 
+	var getinfo = async function() {
+		console.log('testing');
+
+		let url = 'http://localhost:3000/api/v1/products'
+	
+		let response = await fetch(url, {
+			method: 'GET',
+		  })
+	
+		const data = await response.json();
+		
+		//console.log(data[0].brand);
+		
+		console.log(data);
+
+		//return JSON.parse(data);
+
+		//let data = await response.json();
+		// return data;
+		
+	};
+
 	
 	$(function(){
 		contentWayPoint();
@@ -143,6 +165,7 @@
 		parallax();
 		// pieChart();
 		skillsWayPoint();
+		getinfo();
 	});
 
 
