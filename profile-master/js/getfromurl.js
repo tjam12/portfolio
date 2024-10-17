@@ -6,7 +6,7 @@
     var getinfo = async function() {
         console.log('testing');
 
-        let url = 'http://localhost:3000/api/v1/products'
+        let url = 'https://lrfl39j6fl.execute-api.ap-southeast-2.amazonaws.com/prod/getprojectinfo'
 
         let response = await fetch(url, {
             method: 'GET',
@@ -14,15 +14,10 @@
 
         const data = await response.json();
         
-        
-        
         console.log(data);
-        console.log(data[0].brand);
-
-        
         console.log('inside getinfo');
 
-        return data[0].brand;
+        return data[0].name;
 
 
         //return JSON.parse(data);
