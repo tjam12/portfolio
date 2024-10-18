@@ -10,10 +10,14 @@ const port = 4000;
 
 const projectinfo = mongoose.model('projectinfo', mongoose.Schema({
     name : {type : String}
-},{
-collection : `projectinfo`}
+},{collection : `projectinfo`}
 ))
 
+const frameworknicon = mongoose.model('frameworknicon', mongoose.Schema({
+  name : {type : String},
+  iconlink : String,
+},{collection : `frameworknicon`}
+))
 
 app.use(express.json());
 app.use('/portfolio',express.static("profile-master"));
@@ -34,6 +38,26 @@ app.get(`/getprojectinfo`, async(req,res)=>{
     res.send(projectinfolist);
 })
 
+
+app.get(`/geticon`, async(req,res)=>{
+  //localhost:3000/api/v1/products?categories=2342342,234234
+      console.log('after auth');
+      let filter = {};
+  
+      const frameworkiconlist = await frameworknicon.find();
+      //.select('name image -_id');
+  
+      if(!frameworkiconlist){
+          res.status(500).json({
+              sucess: false
+          })
+      }
+
+      console.log(frameworkiconlist);
+      res.send(frameworkiconlist);
+  })
+  
+
 app.get('/hello/project1', (req, res) => {
   document.write(path.join(__dirname, '/profile-master/index2.html'))
 });
@@ -48,9 +72,9 @@ mongoose.connect(mongodb)
     console.log(err);
 })
 
-// app.listen(4000, ()=> {
-//     console.log(api);
-//     console.log(`Server is listening on port: ${port}`);
-// })
+app.listen(4000, ()=> {
+    console.log(api);
+    console.log(`Server is listening on port: ${port}`);
+})
 
 module.exports.handler = serverless(app);
