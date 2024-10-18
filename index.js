@@ -9,7 +9,12 @@ const app = express();
 const port = 4000;
 
 const projectinfo = mongoose.model('projectinfo', mongoose.Schema({
-    name : {type : String}
+    name : {type : String},
+    frameworkuse : 
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'frameworknicon',//follow mongoose schema naming, not exports
+    }
 },{collection : `projectinfo`}
 ))
 
@@ -27,7 +32,7 @@ app.get(`/getprojectinfo`, async(req,res)=>{
     console.log('after auth');
     let filter = {};
 
-    const projectinfolist = await projectinfo.find();
+    const projectinfolist = await projectinfo.find().populate('frameworkuse');
     //.select('name image -_id');
 
     if(!projectinfolist){
@@ -56,6 +61,25 @@ app.get(`/geticon`, async(req,res)=>{
       console.log(frameworkiconlist);
       res.send(frameworkiconlist);
   })
+
+  app.get(`/getproject`, async(req,res)=>{
+    //localhost:3000/api/v1/products?categories=2342342,234234
+        console.log('after auth');
+        let filter = {};
+    
+        const frameworkiconlist = await frameworknicon.find();
+        //.select('name image -_id');
+    
+        if(!frameworkiconlist){
+            res.status(500).json({
+                sucess: false
+            })
+        }
+  
+        console.log(frameworkiconlist);
+        res.send(frameworkiconlist);
+    })
+    
   
 
 app.get('/hello/project1', (req, res) => {
