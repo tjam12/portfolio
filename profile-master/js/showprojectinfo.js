@@ -20,7 +20,8 @@
 
         // let url = 'https://lrfl39j6fl.execute-api.ap-southeast-2.amazonaws.com/prod/getprojectinfo'
 
-        let url = 'http://localhost:4000/getprojectinfo'
+        // let url = 'http://localhost:4000/getprojectinfo'
+        let url = 'https://lrfl39j6fl.execute-api.ap-southeast-2.amazonaws.com/prod/getprojectinfo'
 
         let response = await fetch(url, {
             method: 'GET',
@@ -31,17 +32,12 @@
         console.log(data);
         console.log('inside getinfo');
 
-        
-        
-
         return data;
-
 
         //return JSON.parse(data);
 
         //let data = await response.json();
         // return data;
-    
     };
 
 
@@ -79,7 +75,7 @@
                     //break;
             }
                 
-            });
+        });
 
         var project = getQueryParameter('project');
         console.log(project);
@@ -87,7 +83,6 @@
             {
                 $('.project0').show();
             } 
-            
         else if(project.toLowerCase() === 'project1') 
             {
                 $('.project1').show();
@@ -121,7 +116,6 @@
             }
             
             
-
         console.log('inside getfromurl');
 	});
 

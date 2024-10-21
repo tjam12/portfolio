@@ -8,7 +8,9 @@
 
         // let url = 'https://lrfl39j6fl.execute-api.ap-southeast-2.amazonaws.com/prod/getprojectinfo'
 
-        let url = 'http://localhost:4000/geticon'
+        // let url = 'http://localhost:4000/geticon'
+
+        let url = 'https://lrfl39j6fl.execute-api.ap-southeast-2.amazonaws.com/prod/geticon'
 
         let response = await fetch(url, {
             method: 'GET',
