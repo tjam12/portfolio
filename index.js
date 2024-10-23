@@ -10,10 +10,21 @@ const port = 4000;
 
 const projectinfo = mongoose.model('projectinfo', mongoose.Schema({
     name : {type : String},
+    affiliation: String,
     frameworkuse : 
+    [
+      { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'frameworknicon' 
+      }
+    ],
+    projectimage : 
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'frameworknicon',//follow mongoose schema naming, not exports
+      type: Array
+    },
+    projectsummary :
+    {
+      type: String
     }
 },{collection : `projectinfo`}
 ))
@@ -29,11 +40,14 @@ app.use('/portfolio',express.static("profile-master"));
 
 app.get(`/getprojectinfo`, async(req,res)=>{
 //localhost:3000/api/v1/products?categories=2342342,234234
-    console.log('after auth');
+    //console.log('after auth');
     let filter = {};
 
-    const projectinfolist = await projectinfo.find().populate('frameworkuse');
+    const projectinfolist = await projectinfo.find().populate(['frameworkuse']);
     //.select('name image -_id');
+
+    //console.log(`check project list`);
+    //console.log(projectinfolist);
 
     if(!projectinfolist){
         res.status(500).json({
@@ -46,7 +60,7 @@ app.get(`/getprojectinfo`, async(req,res)=>{
 
 app.get(`/geticon`, async(req,res)=>{
   //localhost:3000/api/v1/products?categories=2342342,234234
-      console.log('after auth');
+      // //console.log('after auth');
       let filter = {};
   
       const frameworkiconlist = await frameworknicon.find();
@@ -58,29 +72,9 @@ app.get(`/geticon`, async(req,res)=>{
           })
       }
 
-      console.log(frameworkiconlist);
+      // //console.log(frameworkiconlist);
       res.send(frameworkiconlist);
   })
-
-  app.get(`/getproject`, async(req,res)=>{
-    //localhost:3000/api/v1/products?categories=2342342,234234
-        console.log('after auth');
-        let filter = {};
-    
-        const frameworkiconlist = await frameworknicon.find();
-        //.select('name image -_id');
-    
-        if(!frameworkiconlist){
-            res.status(500).json({
-                sucess: false
-            })
-        }
-  
-        console.log(frameworkiconlist);
-        res.send(frameworkiconlist);
-    })
-    
-  
 
 app.get('/hello/project1', (req, res) => {
   document.write(path.join(__dirname, '/profile-master/index2.html'))
@@ -90,15 +84,15 @@ const CONNECTION_STRING =
 
 mongoose.connect(mongodb)
 .then(()=>{
-    console.log('Database is ready');
+    //console.log('Database is ready');
 })
 .catch((err)=>{
-    console.log(err);
+    //console.log(err);
 })
 
 app.listen(4000, ()=> {
-    console.log(api);
-    console.log(`Server is listening on port: ${port}`);
+    //console.log(api);
+    //console.log(`Server is listening on port: ${port}`);
 })
 
 module.exports.handler = serverless(app);
